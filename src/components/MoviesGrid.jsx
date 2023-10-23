@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { get } from "../utils/httpClient";
 import { MovieCard } from "./MovieCard";
 import styles from "./MoviesGrid.module.css";
@@ -9,37 +9,49 @@ import { Empty } from "./Empty";
 export function MoviesGrid({ search }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const itemsPerPage = 15;
 
   useEffect(() => {
     setIsLoading(true);
     const searchUrl = search
-      ? "/search/movie?query=" + search + "&page=" + page
-      : "/discover/movie?page=" + page;
+      ? `/search/movie?query=${search}&page=${currentPage}`
+      : `/discover/movie?page=${currentPage}`;
     get(searchUrl).then((data) => {
-      setMovies((prevMovies) => prevMovies.concat(data.results));
+      setMovies(data.results);
       setHasMore(data.page < data.total_pages);
       setIsLoading(false);
     });
-  }, [search, page]);
+  }, [search, currentPage]);
 
-  if (!isLoading && movies.length === 0) {
-    return <Empty />;
-  }
+  useEffect(() => {
+    setCurrentPage(1); // Restablece la página actual cuando se cambia la búsqueda
+  }, [search]);
 
   return (
-    <InfiniteScroll
-      dataLength={movies.length}
-      hasMore={hasMore}
-      next={() => setPage((prevPage) => prevPage + 1)}
-      loader={<Spinner />}
-    >
-      <ul className={styles.moviesGrid}>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </ul>
-    </InfiniteScroll>
+    <div>
+      <InfiniteScroll
+        dataLength={movies.length}
+        hasMore={hasMore}
+        next={() => setCurrentPage(currentPage + 1)}
+        loader={<Spinner />}
+      >
+        <ul className={styles.moviesGrid}>
+          {movies.slice(0, currentPage * itemsPerPage).map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </ul>
+        <div className={styles.buttonContainer}>
+          {currentPage > 1 && (
+            <button onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+          )}
+          <span className={styles.pageNumber}>Página {currentPage}</span>
+          {hasMore && (
+            <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+          )}
+        </div>
+      </InfiniteScroll>
+    </div>
   );
 }
