@@ -6,8 +6,24 @@
   justify-content: center;
 }
 
+/* Agrega estilos para centrar los botones y aplicar el esquema de color */
+.buttonContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.buttonContainer button {
+  background-color: black;
+  color: red;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
 @media (max-width: 560px) {
   .moviesGrid {
     grid-template-columns: 100%;
   }
 }
+
