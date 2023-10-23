@@ -54,7 +54,7 @@
     "id": 587807,
     "original_language": "en",
     "original_title": "Tom & Jerry",
-    "overview": "Tom the cat and Jerry the mouse get kicked out of their home and relocate to a fancy New York hotel, where a scrappy employee named Kayla will lose her job if she can’t evict Jerry before a high-class wedding at the hotel. Her solution? Hiring Tom to get rid of the pesky mouse.",
+    "overview": "Set in a world co-populated by humans and cartoon animals, the story follows Tom enlisted to catch Jerry, whose presence threatens New York City's fanciest hotel and its planned high-profile Indian-themed wedding.",
     "popularity": 2039.388,
     "poster_path": "/6KErczPBROQty7QoIsaa6wJYXZi.jpg",
     "release_date": "2021-02-11",
@@ -62,7 +62,8 @@
     "video": true,
     "vote_average": 7.5,
     "vote_count": 883,
-    "youtubeVideoId": "SqHLcaq4fSc"
+    "videoUrl": "https://www.youtube.com/watch?v=9C9gUm4PVQI"
+    
   },
   {
     "adult": false,
