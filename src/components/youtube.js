@@ -1,8 +1,10 @@
-// let youtubePlayer;
+
 
 // function onYouTubeIframeAPIReady() {
+//     let youtubePlayer;
+//     const youtubeVideo = movie.youtubeVideo;
 //     youtubePlayer = new YT.Player('reproductor', {
-//         videoId: 'HQ0gkD64Ecc', //D del video que desees reproducir
+//         youtubeVideo : youtubeVideo, //D del video que desees reproducir
 //         playerVars: {
 //             'autoplay': 1,
 //         },
@@ -10,7 +12,7 @@
 //             'onReady': onPlayerReady,
 //         },
 //         // clave de API aquí
-//         apiKey: 'AIzaSyDzfznI8Q-X1lAfWQUTzbCUhZqldIfyRFc',
+//         apiKey: 'AIzaSyDqQmL8Lu3FpjhK4Z5xV-UYQ1m3A1dC4oE',
 //     });
 // }
 

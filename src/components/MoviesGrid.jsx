@@ -1,37 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { get } from "../utils/httpClient";
+import { Link } from "react-router-dom";
 import { MovieCard } from "./MovieCard";
 import styles from "./MoviesGrid.module.css";
 import { Spinner } from "./Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Empty } from "./Empty";
+import { FaSearch } from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
 
-export function MoviesGrid({ search }) {
+// Importa el archivo JSON local (ajusta la ruta según sea necesario)
+import moviesData from "../components/movies.json";
+
+export function MoviesGrid() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const itemsPerPage = 15;
+  const [query, setQuery] = useSearchParams();
+  const search = query.get("search");
 
   useEffect(() => {
     setIsLoading(true);
-    const searchUrl = search
-      ? `/search/movie?query=${search}&page=${currentPage}`
-      : `/discover/movie?page=${currentPage}`;
-    get(searchUrl).then((data) => {
-      setMovies(data.results);
-      setHasMore(data.page < data.total_pages);
-      setIsLoading(false);
-    });
-  }, [search, currentPage]);
-  
 
-  useEffect(() => {
-    setCurrentPage(1); // Restablece la página actual cuando se cambia la búsqueda
+    // Filtra las películas del archivo JSON local
+    const filteredMovies = moviesData.filter((movie) => {
+      if (!search) return true; // Si no hay término de búsqueda, muestra todas las películas
+      // Filtra las películas que coinciden con el término de búsqueda (en este ejemplo, solo por título)
+      return movie.title.toLowerCase().includes(search.toLowerCase());
+    });
+
+    setMovies(filteredMovies);
+    setIsLoading(false);
   }, [search]);
 
   return (
     <div>
+      <div className={styles.searchContainer}>
+        <div className={styles.searchBox}>
+          {/* <input
+            className={styles.searchInput}
+            type="text"
+            value={search || ""}
+            autoFocus
+            placeholder="Title"
+            aria-label="Search Movies"
+            onChange={(e) => {
+              const value = e.target.value;
+              setQuery({ search: value });
+            }}
+          /> */}
+          <FaSearch size={20} color="black" className={styles.searchButton} />
+        </div>
+      </div>
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}
@@ -40,14 +60,17 @@ export function MoviesGrid({ search }) {
       >
         <ul className={styles.moviesGrid}>
           {movies.slice(0, currentPage * itemsPerPage).map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            // Utiliza Link para envolver MovieCard y pasar datos de película a la página de detalles
+            <Link key={movie.id} to={`/movie/${movie.id}`} state={movie}>
+              <MovieCard movie={movie} />
+            </Link>
           ))}
         </ul>
         <div className={styles.buttonContainer}>
           {currentPage > 1 && (
             <button onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
           )}
-          <span className={styles.pageNumber}>Página {currentPage}</span>
+          <span className={styles.pageNumber}>Page {currentPage}</span>
           {hasMore && (
             <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
           )}

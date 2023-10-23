@@ -1,53 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { Spinner } from "../components/Spinner";
-import { get } from "../utils/httpClient";
 import styles from "./MovieDetails.module.css";
-import YouTube from "react-youtube"; // Importa el componente "YouTube"
+import ReactPlayer from "react-player";
+import { useParams } from "react-router-dom";
+import moviesData from "../components/movies.json"; // Ajusta la importación del archivo JSON
 
 export function MovieDetails() {
-  const { movieId } = useParams();
+  const { movieId } = useParams(); // Cambia "movieTitle" a "movieId" para recibir el ID desde la URL
   const [isLoading, setIsLoading] = useState(true);
   const [movie, setMovie] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
 
-    get("/movie/" + movieId).then((data) => {
-      setMovie(data);
+    // Busca la información de la película directamente en el archivo JSON por ID
+    const selectedMovie = moviesData.find((item) => item.id === parseInt(movieId)); // Asegúrate de convertir el ID a un número
+
+    if (selectedMovie) {
+      setMovie(selectedMovie);
+      setVideoUrl(selectedMovie.videoUrl);
       setIsLoading(false);
-    });
+    } else {
+      setIsLoading(false);
+    }
   }, [movieId]);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const youtubeVideoId = movie.youtubeVideoId; // asegurarse que "youtubeVideoId" esté configurado en tu JSON
-
-  // opciones del reproductor
-  const opts = {
-    height: "360",
-    width: "640",
-    playerVars: {
-      autoplay: 1,
-      key: "AIzaSyDzfznI8Q-X1lAfWQUTzbCUhZqldIfyRFc", //clave de API
-    },
-  };
-
   return (
     <div className={styles.detailsContainer}>
-      <YouTube videoId={youtubeVideoId} opts={opts} />
+      <ReactPlayer url={videoUrl} controls={true} width="740px" height="460px" />
       <div className={`${styles.col} ${styles.movieDetails}`}>
         <p className={styles.firstItem}>
-          <strong>Title:</strong> {movie.title}
+          <strong>Title:</strong> {movie ? movie.title : "No Title Available"}
         </p>
         <p>
-          <strong>Genres:</strong>{" "}
-          {movie.genres.map((genre) => genre.name).join(", ")}
+          <strong>Genres:</strong> {movie ? movie.genre_ids.join(", ") : "No Genres Available"}
         </p>
         <p>
-          <strong>Description:</strong> {movie.overview}
+          <strong>Description:</strong> {movie ? movie.overview : "No Description Available"}
         </p>
       </div>
     </div>
