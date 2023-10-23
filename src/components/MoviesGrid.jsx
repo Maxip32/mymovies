@@ -24,6 +24,7 @@ export function MoviesGrid({ search }) {
       setIsLoading(false);
     });
   }, [search, currentPage]);
+  
 
   useEffect(() => {
     setCurrentPage(1); // Restablece la página actual cuando se cambia la búsqueda
