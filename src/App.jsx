@@ -7,21 +7,18 @@ import {
   Navigate,
 } from "react-router-dom";
 import { MovieDetails } from "./pages/MovieDetails";
-import { LandingPage } from "./pages/LandingPage";
+import { Home } from "./pages/Home";
+import { LandingPage } from "./pages/LandingPage"
 
 export function App() {
   return (
     <Router>
-      <header>
-        <Link to="/">
-          <h1 className={styles.title}>Proyector Movies</h1>
-        </Link>
-      </header>
       <main>
         <Routes>
+          <Route path="/" element={<LandingPage/>} />
           <Route path="/movies/:movieId" element={<MovieDetails />} />
-          <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<Navigate replace to="/" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </main>
     </Router>
