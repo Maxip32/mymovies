@@ -35,11 +35,14 @@ export function MoviesGrid() {
 
   return (
     <>
-      <header>
+    <div>
+      
         <Link to="/home">
           <h1 className={styles.title}>Proyector Movies</h1>
         </Link>
-      </header>
+      
+
+    </div>
       <div>
         <div className={styles.searchContainer}>
           <div className={styles.searchBox}>
