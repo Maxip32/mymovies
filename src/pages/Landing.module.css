@@ -1,12 +1,32 @@
- .button{
-    color: rgb(214, 20, 236);
-    justify-content: center;
-    display: flex;
-    margin-top: 20%;
-    font-size: large;
-    width: 160px;
-    height: 38px;
-    margin-left: 40%;
+.button {
+   position: relative;
+   background-color: #007acc; /* Color de fondo del botón */
+   color: #fff; /* Color del texto */
+   padding: 20px 60px;
+   border: none;
+   /* border-radius: 5px; */
+   font-size: x-large;
+   transition: 0.3s;
+   cursor: pointer;
+   margin-top: 20%;
+   border-radius: 100%;
+   margin-left: 45%;
  }
-
+ 
+ .button::before {
+   content: ''; /* pseudo-elemento para el ícono de "play" */
+   position: absolute;
+   width: 0;
+   height: 0;
+   border-top: 14px solid transparent;
+   border-bottom: 15px solid transparent;
+   border-left: 25px solid #fff; /* Triángulo en color blanco */
+   left: 20px;
+   top: 19px;
+ }
+ 
+ .button:hover {
+   background-color: #005fa6; /* Cambia el color de fondo al pasar el cursor */
+   color: #fff;
+ }
  
