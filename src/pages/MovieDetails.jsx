@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moviesData from "../components/movies.json"; // Ajusta la importación del archivo JSON
+import { NavBar } from "../components/NavBar";
 
 export function MovieDetails() {
   const { movieId } = useParams(); // Cambia "movieTitle" a "movieId" para recibir el ID desde la URL
@@ -34,9 +35,7 @@ export function MovieDetails() {
   return (
     <>
       <header>
-        <Link to="/home">
-          <h1 className={styles.title}>Proyector Movies</h1>
-        </Link>
+        <NavBar/>
       </header>
       <div className={styles.detailsContainer}>
         <ReactPlayer url={videoUrl} controls={true} width="740px" height="460px" />

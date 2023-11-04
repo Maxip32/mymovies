@@ -9,12 +9,14 @@ import {
 import { MovieDetails } from "./pages/MovieDetails";
 import { Home } from "./pages/Home";
 import { LandingPage } from "./pages/LandingPage"
+import { NavBar } from "./components/NavBar";
 
 export function App() {
   return (
     <Router>
       <main>
         <Routes>
+          <Route path="/*" element={<NavBar/>} />
           <Route path="/" element={<LandingPage/>} />
           <Route path="/movies/:movieId" element={<MovieDetails />} />
           <Route path="/home" element={<Home />} />

@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { MoviesGrid } from "../components/MoviesGrid";
-import { Search } from "../components/Search";
 import { useDebounce } from "../hooks/useDebounce";
+import { NavBar } from "../components/NavBar";
 
 export function Home() {
   const [query] = useSearchParams();
@@ -10,7 +10,7 @@ export function Home() {
   const debouncedSearch = useDebounce(search, 300);
   return (
     <div>
-      <Search />
+      <NavBar />
       <MoviesGrid key={debouncedSearch} search={debouncedSearch} />
     </div>
   );

@@ -1,5 +1,12 @@
- .container {
-    color: antiquewhite;
+ .button{
+    color: rgb(214, 20, 236);
+    justify-content: center;
+    display: flex;
+    margin-top: 20%;
+    font-size: large;
+    width: 160px;
+    height: 38px;
+    margin-left: 40%;
  }
 
  
